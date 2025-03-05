@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://cbeoup3mi4vwt"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_iacoy"]
+
+[sub_resource type="Gradient" id="Gradient_jkjl7"]
+interpolation_mode = 1
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pskca"]
+gradient = SubResource("Gradient_jkjl7")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_oweat"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wqird"]
+gradient = SubResource("Gradient_oweat")
+width = 48
+height = 48
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6lp34"]
+radius = 36.4006
+
+[node name="Player" type="RigidBody2D" groups=["player"]]
+gravity_scale = 3.5
+script = ExtResource("1_iacoy")
+jump_strength = 1000.0
+
+[node name="BackgroundTexture" type="Sprite2D" parent="."]
+z_index = 5
+scale = Vector2(0.5, 0.5)
+texture = SubResource("GradientTexture2D_pskca")
+
+[node name="CurrentColorTexture" type="Sprite2D" parent="."]
+z_index = 6
+scale = Vector2(0.5, 0.5)
+texture = SubResource("GradientTexture2D_wqird")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["wall"]]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_6lp34")

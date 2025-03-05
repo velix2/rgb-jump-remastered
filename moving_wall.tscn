@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0xpak1eiss0i"]
+
+[ext_resource type="Script" path="res://moving_wall.gd" id="1_d8850"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ybne4"]
+size = Vector2(64, 64)
+
+[sub_resource type="Gradient" id="Gradient_sv2gi"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.140447, 0.140447, 0.140447, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8kp5r"]
+gradient = SubResource("Gradient_sv2gi")
+
+[sub_resource type="Gradient" id="Gradient_l124v"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cqxx3"]
+gradient = SubResource("Gradient_l124v")
+
+[node name="MovingWall" type="Node2D"]
+script = ExtResource("1_d8850")
+
+[node name="WallTop" type="Area2D" parent="."]
+position = Vector2(0, -512)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallTop"]
+scale = Vector2(4, 10)
+shape = SubResource("RectangleShape2D_ybne4")
+
+[node name="Sprite2D" type="Sprite2D" parent="WallTop"]
+scale = Vector2(4, 10)
+texture = SubResource("GradientTexture2D_8kp5r")
+
+[node name="Passthrough" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Passthrough"]
+scale = Vector2(4, 6)
+shape = SubResource("RectangleShape2D_ybne4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Passthrough"]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(4, 6)
+texture = SubResource("GradientTexture2D_cqxx3")
+
+[node name="WallBottom" type="Area2D" parent="."]
+position = Vector2(0, 512)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallBottom"]
+scale = Vector2(4, 10)
+shape = SubResource("RectangleShape2D_ybne4")
+
+[node name="Sprite2D" type="Sprite2D" parent="WallBottom"]
+scale = Vector2(4, 10)
+texture = SubResource("GradientTexture2D_8kp5r")
+
+[connection signal="body_entered" from="WallTop" to="." method="_on_wall_body_entered"]
+[connection signal="body_entered" from="Passthrough" to="." method="_on_passthrough_body_entered"]
+[connection signal="body_exited" from="Passthrough" to="." method="_on_passthrough_body_exited"]
+[connection signal="body_entered" from="WallBottom" to="." method="_on_wall_body_entered"]
