@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var wall_speed: float = 400
+@export var score_awarded: int = 10
 
 const player_colors = [Color.RED, Color.GREEN, Color.BLUE]
 var current_color: int = 0
@@ -28,4 +29,6 @@ func _on_passthrough_body_entered(body: Node2D) -> void:
 
 func _on_passthrough_body_exited(body:Node2D) -> void:
 	if body.is_in_group("player"):
-		pass
+		# Check if player exited to the right
+		if body.position.x >= (position.x + scale.x * 0.9):
+			ScoreManager.add_score(score_awarded)

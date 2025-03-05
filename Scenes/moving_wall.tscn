@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c0xpak1eiss0i"]
 
-[ext_resource type="Script" uid="uid://1taldbd5qdl5" path="res://moving_wall.gd" id="1_d8850"]
+[ext_resource type="Script" uid="uid://1taldbd5qdl5" path="res://Scripts/MovingWall.gd" id="1_d8850"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ybne4"]
 size = Vector2(64, 64)
@@ -23,6 +23,7 @@ gradient = SubResource("Gradient_l124v")
 script = ExtResource("1_d8850")
 
 [node name="WallTop" type="Area2D" parent="."]
+z_index = 2
 position = Vector2(0, -512)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallTop"]
@@ -34,6 +35,7 @@ scale = Vector2(4, 10)
 texture = SubResource("GradientTexture2D_8kp5r")
 
 [node name="Passthrough" type="Area2D" parent="."]
+z_index = -1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Passthrough"]
 scale = Vector2(4, 6)
@@ -45,6 +47,7 @@ scale = Vector2(4, 6)
 texture = SubResource("GradientTexture2D_cqxx3")
 
 [node name="WallBottom" type="Area2D" parent="."]
+z_index = 2
 position = Vector2(0, 512)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallBottom"]
