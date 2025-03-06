@@ -1,0 +1,129 @@
+[gd_scene load_steps=7 format=3 uid="uid://ce81uwmd0e3qc"]
+
+[ext_resource type="Script" uid="uid://b0fyavra3xo6h" path="res://Scripts/ScoreValue.gd" id="1_d7ayl"]
+[ext_resource type="Script" uid="uid://imjm1s0o4p1h" path="res://Scripts/TimeValue.gd" id="2_ftpgu"]
+[ext_resource type="Script" uid="uid://ch1mk2twjdwqi" path="res://Scripts/PlayAgainButton.gd" id="3_wakbs"]
+[ext_resource type="Script" uid="uid://bgugseeht2kc7" path="res://Scripts/ChangeSceneButton.gd" id="4_0f3ue"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ihaks"]
+bg_color = Color(0.129559, 0.129558, 0.129558, 1)
+skew = Vector2(0.145, 0)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ihaks"]
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 2
+
+[node name="Control" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = -179.0
+offset_right = 352.0
+offset_bottom = 179.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ihaks")
+
+[node name="GameOverPanel" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -231.0
+offset_top = -137.0
+offset_right = 231.0
+offset_bottom = 137.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Title" type="Label" parent="Panel/GameOverPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 81
+text = "Game Over!"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/GameOverPanel"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_ihaks")
+
+[node name="ScoreLine" type="HBoxContainer" parent="Panel/GameOverPanel"]
+layout_mode = 2
+
+[node name="ScoreText" type="Label" parent="Panel/GameOverPanel/ScoreLine"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Score:"
+vertical_alignment = 1
+
+[node name="ScoreValue" type="Label" parent="Panel/GameOverPanel/ScoreLine"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "%05d"
+script = ExtResource("1_d7ayl")
+
+[node name="TimeLine" type="HBoxContainer" parent="Panel/GameOverPanel"]
+layout_mode = 2
+
+[node name="TimeText" type="Label" parent="Panel/GameOverPanel/TimeLine"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Time Survived:"
+vertical_alignment = 1
+
+[node name="TimeValue" type="Label" parent="Panel/GameOverPanel/TimeLine"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "%02d:%02d"
+script = ExtResource("2_ftpgu")
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/GameOverPanel"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_ihaks")
+
+[node name="ButtonLine" type="HBoxContainer" parent="Panel/GameOverPanel"]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="Panel/GameOverPanel/ButtonLine"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Play Again"
+script = ExtResource("3_wakbs")
+
+[node name="MenuButton" type="Button" parent="Panel/GameOverPanel/ButtonLine"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Main Menu
+"
+script = ExtResource("4_0f3ue")
+scene_to_load_path = "res://Scenes/menu.tscn"
+
+[connection signal="visibility_changed" from="Panel/GameOverPanel/ScoreLine/ScoreValue" to="Panel/GameOverPanel/ScoreLine/ScoreValue" method="_on_visibility_changed"]
+[connection signal="visibility_changed" from="Panel/GameOverPanel/TimeLine/TimeValue" to="Panel/GameOverPanel/TimeLine/TimeValue" method="_on_visibility_changed"]
+[connection signal="pressed" from="Panel/GameOverPanel/ButtonLine/PlayAgainButton" to="Panel/GameOverPanel/ButtonLine/PlayAgainButton" method="_on_pressed"]
+[connection signal="pressed" from="Panel/GameOverPanel/ButtonLine/MenuButton" to="Panel/GameOverPanel/ButtonLine/MenuButton" method="_on_pressed"]

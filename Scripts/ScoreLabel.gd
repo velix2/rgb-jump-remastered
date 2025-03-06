@@ -12,3 +12,7 @@ func _on_score_changed(score: int):
 	
 func update_text(score: int):
 	text = base_string % score
+
+
+func _on_player_player_died() -> void:
+	visible = false

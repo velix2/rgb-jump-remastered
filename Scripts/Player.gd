@@ -33,7 +33,7 @@ func _process(_delta: float) -> void:
 	passed_screen_borders()
 
 func update_color_display() -> void:
-	modulate = player_colors[current_color]
+	$CurrentColorTexture.modulate = player_colors[current_color]
 
 func jump() -> void:
 	linear_velocity = Vector2.ZERO

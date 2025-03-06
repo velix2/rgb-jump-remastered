@@ -1,29 +1,43 @@
-[gd_scene load_steps=5 format=3 uid="uid://pb1hp8l4oi4o"]
+[gd_scene load_steps=8 format=3 uid="uid://pb1hp8l4oi4o"]
 
 [ext_resource type="Script" uid="uid://dkoex5utmjyov" path="res://Scripts/Main.gd" id="1_6i4rv"]
 [ext_resource type="PackedScene" uid="uid://cbeoup3mi4vwt" path="res://Scenes/player.tscn" id="1_6lt1q"]
 [ext_resource type="PackedScene" uid="uid://c0xpak1eiss0i" path="res://Scenes/moving_wall.tscn" id="3_3lq6p"]
 [ext_resource type="Script" uid="uid://dkduaa2pdde0f" path="res://Scripts/ScoreLabel.gd" id="4_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://ce81uwmd0e3qc" path="res://Scenes/game_over_panel.tscn" id="5_kry3j"]
+[ext_resource type="Script" uid="uid://cq5rfx7umlela" path="res://Scripts/GameOverPanel.gd" id="6_21xkr"]
+
+[sub_resource type="Environment" id="Environment_jjvhh"]
+background_mode = 3
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.69
+glow_strength = 0.88
+glow_bloom = 0.03
+glow_blend_mode = 0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_6i4rv")
 wall_scene = ExtResource("3_3lq6p")
 
 [node name="Player" parent="." instance=ExtResource("1_6lt1q")]
-position = Vector2(250, 360)
+position = Vector2(250, 540)
 
 [node name="WallTimer" type="Timer" parent="."]
 autostart = true
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jjvhh")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
 z_index = 100
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 1060.0
-offset_top = 15.0
-offset_right = 1272.0
-offset_bottom = 92.0
+offset_left = -327.0
+offset_bottom = 77.0
 grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 0
@@ -32,4 +46,11 @@ text = "Score: %05d"
 horizontal_alignment = 2
 script = ExtResource("4_jjvhh")
 
+[node name="GameOverPanel" parent="CanvasLayer" instance=ExtResource("5_kry3j")]
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("6_21xkr")
+
+[connection signal="player_died" from="Player" to="CanvasLayer/ScoreLabel" method="_on_player_player_died"]
+[connection signal="player_died" from="Player" to="CanvasLayer/GameOverPanel" method="_on_player_player_died"]
 [connection signal="timeout" from="WallTimer" to="." method="_on_wall_timer_timeout"]
