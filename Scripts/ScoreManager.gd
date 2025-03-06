@@ -7,3 +7,6 @@ var score: int = 0
 func add_score(added_score: int) -> void:
 	score += added_score
 	score_changed.emit(score)
+
+func reset_score() -> void:
+	score = 0

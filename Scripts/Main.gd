@@ -20,3 +20,4 @@ func _on_wall_timer_timeout() -> void:
 
 func _init() -> void:
 	TimeManager.reset_start_time()
+	ScoreManager.reset_score()
