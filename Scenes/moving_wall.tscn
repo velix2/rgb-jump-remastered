@@ -1,23 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0xpak1eiss0i"]
+[gd_scene load_steps=5 format=3 uid="uid://c0xpak1eiss0i"]
 
 [ext_resource type="Script" uid="uid://1taldbd5qdl5" path="res://Scripts/MovingWall.gd" id="1_d8850"]
+[ext_resource type="Texture2D" uid="uid://0n0aldig74v8" path="res://Barrier.png" id="2_f4boo"]
+[ext_resource type="Texture2D" uid="uid://bec02rivfpo57" path="res://Passthrough.png" id="3_xf5eu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ybne4"]
 size = Vector2(64, 64)
-
-[sub_resource type="Gradient" id="Gradient_sv2gi"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.140447, 0.140447, 0.140447, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_8kp5r"]
-gradient = SubResource("Gradient_sv2gi")
-
-[sub_resource type="Gradient" id="Gradient_l124v"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_cqxx3"]
-gradient = SubResource("Gradient_l124v")
 
 [node name="MovingWall" type="Node2D"]
 script = ExtResource("1_d8850")
@@ -31,8 +19,12 @@ scale = Vector2(4, 10)
 shape = SubResource("RectangleShape2D_ybne4")
 
 [node name="Sprite2D" type="Sprite2D" parent="WallTop"]
-scale = Vector2(4, 10)
-texture = SubResource("GradientTexture2D_8kp5r")
+texture_filter = 1
+texture_repeat = 3
+scale = Vector2(8, 8)
+texture = ExtResource("2_f4boo")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 80)
 
 [node name="Passthrough" type="Area2D" parent="."]
 z_index = -1
@@ -43,8 +35,10 @@ shape = SubResource("RectangleShape2D_ybne4")
 
 [node name="Sprite2D" type="Sprite2D" parent="Passthrough"]
 modulate = Color(1, 0, 0, 1)
-scale = Vector2(4, 6)
-texture = SubResource("GradientTexture2D_cqxx3")
+scale = Vector2(8, 8)
+texture = ExtResource("3_xf5eu")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 48)
 
 [node name="WallBottom" type="Area2D" parent="."]
 z_index = 2
@@ -55,8 +49,12 @@ scale = Vector2(4, 10)
 shape = SubResource("RectangleShape2D_ybne4")
 
 [node name="Sprite2D" type="Sprite2D" parent="WallBottom"]
-scale = Vector2(4, 10)
-texture = SubResource("GradientTexture2D_8kp5r")
+texture_filter = 1
+texture_repeat = 3
+scale = Vector2(8, 8)
+texture = ExtResource("2_f4boo")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 80)
 
 [connection signal="body_entered" from="WallTop" to="." method="_on_wall_body_entered"]
 [connection signal="body_entered" from="Passthrough" to="." method="_on_passthrough_body_entered"]

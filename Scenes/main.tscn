@@ -1,20 +1,29 @@
-[gd_scene load_steps=8 format=3 uid="uid://pb1hp8l4oi4o"]
+[gd_scene load_steps=10 format=3 uid="uid://pb1hp8l4oi4o"]
 
 [ext_resource type="Script" uid="uid://dkoex5utmjyov" path="res://Scripts/Main.gd" id="1_6i4rv"]
 [ext_resource type="PackedScene" uid="uid://cbeoup3mi4vwt" path="res://Scenes/player.tscn" id="1_6lt1q"]
 [ext_resource type="PackedScene" uid="uid://c0xpak1eiss0i" path="res://Scenes/moving_wall.tscn" id="3_3lq6p"]
 [ext_resource type="Script" uid="uid://dkduaa2pdde0f" path="res://Scripts/ScoreLabel.gd" id="4_jjvhh"]
+[ext_resource type="Texture2D" uid="uid://0n0aldig74v8" path="res://Barrier.png" id="5_344ge"]
 [ext_resource type="PackedScene" uid="uid://ce81uwmd0e3qc" path="res://Scenes/game_over_panel.tscn" id="5_kry3j"]
 [ext_resource type="Script" uid="uid://cq5rfx7umlela" path="res://Scripts/GameOverPanel.gd" id="6_21xkr"]
+[ext_resource type="Texture2D" uid="uid://dhrlppl2per6" path="res://Background.png" id="7_6bp64"]
 
 [sub_resource type="Environment" id="Environment_jjvhh"]
 background_mode = 3
 tonemap_mode = 2
 glow_enabled = true
-glow_intensity = 0.69
+glow_intensity = 4.57
 glow_strength = 0.88
 glow_bloom = 0.03
 glow_blend_mode = 0
+glow_hdr_threshold = 0.01
+glow_hdr_scale = 3.39
+glow_hdr_luminance_cap = 1.86
+glow_map_strength = 0.5
+adjustment_enabled = true
+adjustment_brightness = 0.66
+adjustment_saturation = 0.92
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_6i4rv")
@@ -29,6 +38,35 @@ autostart = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_jjvhh")
 
+[node name="ParallaxBackground" type="Parallax2D" parent="."]
+repeat_size = Vector2(1920, 0)
+autoscroll = Vector2(-100, 0)
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("7_6bp64")
+centered = false
+
+[node name="ParallaxForeground" type="Parallax2D" parent="."]
+visible = false
+repeat_size = Vector2(1920, 0)
+autoscroll = Vector2(-12, 0)
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxForeground"]
+self_modulate = Color(1, 1, 1, 0.419608)
+z_index = 100
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 3
+scale = Vector2(16, 16)
+texture = ExtResource("5_344ge")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 120, 67.5)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ScoreLabel" type="Label" parent="CanvasLayer"]
@@ -36,9 +74,12 @@ z_index = 100
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -327.0
-offset_bottom = 77.0
+offset_left = -420.0
+offset_top = 60.0
+offset_right = -60.0
+offset_bottom = 116.0
 grow_horizontal = 0
+pivot_offset = Vector2(360, 56)
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 56
