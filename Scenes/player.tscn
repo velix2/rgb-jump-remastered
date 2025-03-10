@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbeoup3mi4vwt"]
+[gd_scene load_steps=10 format=3 uid="uid://cbeoup3mi4vwt"]
 
 [ext_resource type="Script" uid="uid://cjb7lv1ggtbme" path="res://Scripts/Player.gd" id="1_iacoy"]
+[ext_resource type="Script" uid="uid://tmrjo8xyn4r5" path="res://Scripts/ScoreSaver.gd" id="2_cvnsp"]
 
 [sub_resource type="Gradient" id="Gradient_jkjl7"]
 interpolation_mode = 1
@@ -66,3 +67,8 @@ texture = SubResource("GradientTexture2D_cvnsp")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["wall"]]
 scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_6lp34")
+
+[node name="ScoreSaver" type="Node2D" parent="."]
+script = ExtResource("2_cvnsp")
+
+[connection signal="player_died" from="." to="ScoreSaver" method="_on_player_player_died"]

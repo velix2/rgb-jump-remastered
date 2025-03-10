@@ -22,9 +22,7 @@ func _on_wall_body_entered(body: Node2D) -> void:
 
 func _on_passthrough_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		if body.current_color == current_color:
-			print("Passed")
-		else:
+		if body.current_color != current_color:
 			body.kill()
 
 func _on_passthrough_body_exited(body:Node2D) -> void:

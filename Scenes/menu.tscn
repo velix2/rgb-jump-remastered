@@ -1,9 +1,64 @@
-[gd_scene load_steps=2 format=3 uid="uid://qrqvh48lkvaw"]
+[gd_scene load_steps=11 format=3 uid="uid://qrqvh48lkvaw"]
 
 [ext_resource type="Script" uid="uid://bgugseeht2kc7" path="res://Scripts/ChangeSceneButton.gd" id="1_1rerr"]
+[ext_resource type="Shader" uid="uid://bcrj20qwb5c7g" path="res://main.gdshader" id="1_158mb"]
+[ext_resource type="Script" uid="uid://ct6pt81larq1w" path="res://Scripts/HighscoresDisplay.gd" id="2_158mb"]
+[ext_resource type="Texture2D" uid="uid://dhrlppl2per6" path="res://Textures/Background.png" id="2_cayip"]
+[ext_resource type="Texture2D" uid="uid://6v6kgsafjwch" path="res://Textures/Logo.png" id="2_jsrd8"]
+[ext_resource type="PackedScene" uid="uid://btw4cd2jwdkc4" path="res://Scenes/settings_pane.tscn" id="5_wwsa2"]
+[ext_resource type="Texture2D" uid="uid://dm4mc5w7hspd1" path="res://Textures/Settings_base.png" id="6_q3rjx"]
+[ext_resource type="Texture2D" uid="uid://qwulgr00nrix" path="res://Textures/Settings_hover.png" id="7_q3rjx"]
 
-[node name="Menu" type="Control"]
-layout_mode = 3
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wwsa2"]
+shader = ExtResource("1_158mb")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(1280, 720)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 9.382
+shader_parameter/roll_variation = 1.249
+shader_parameter/distort_intensity = 0.012
+shader_parameter/noise_opacity = 0.108
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.00800005
+shader_parameter/brightness = 1.32
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.045
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+
+[sub_resource type="Environment" id="Environment_wwsa2"]
+background_mode = 3
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 7.6
+glow_strength = 0.88
+glow_bloom = 0.03
+glow_blend_mode = 0
+glow_hdr_threshold = 0.01
+glow_hdr_scale = 3.39
+glow_hdr_luminance_cap = 1.86
+glow_map_strength = 0.5
+adjustment_enabled = true
+adjustment_brightness = 0.66
+adjustment_saturation = 0.92
+
+[node name="ShaderOverlay" type="ColorRect"]
+z_index = 1000
+z_as_relative = false
+material = SubResource("ShaderMaterial_wwsa2")
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Menu" type="Control" parent="."]
+z_as_relative = false
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -12,7 +67,47 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="."]
+[node name="Title" type="TextureRect" parent="Menu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -375.0
+offset_top = -597.0
+offset_right = 375.0
+offset_bottom = -197.0
+grow_horizontal = 2
+texture = ExtResource("2_jsrd8")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Highscores" type="Label" parent="Menu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -397.0
+offset_top = 375.0
+offset_right = 398.0
+offset_bottom = 482.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 106
+text = "HIGHEST SCORE: 00000"
+horizontal_alignment = 1
+script = ExtResource("2_158mb")
+
+[node name="AnimateUp" type="Timer" parent="Menu/Highscores"]
+one_shot = true
+autostart = true
+
+[node name="AnimateDown" type="Timer" parent="Menu/Highscores"]
+one_shot = true
+
+[node name="Display" type="Timer" parent="Menu/Highscores"]
+wait_time = 5.0
+one_shot = true
+
+[node name="Button" type="Button" parent="Menu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -31,4 +126,43 @@ flat = true
 script = ExtResource("1_1rerr")
 scene_to_load_path = "res://Scenes/main.tscn"
 
-[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
+[node name="SettingsPane" parent="Menu" instance=ExtResource("5_wwsa2")]
+visible = false
+layout_mode = 1
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 0.0
+offset_bottom = 0.0
+scale = Vector2(2, 2)
+
+[node name="SettingsButton" type="TextureButton" parent="Menu"]
+layout_mode = 1
+offset_left = -926.0
+offset_top = -520.0
+offset_right = -826.0
+offset_bottom = -420.0
+texture_normal = ExtResource("6_q3rjx")
+texture_hover = ExtResource("7_q3rjx")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wwsa2")
+
+[node name="ParallaxBackground" type="Parallax2D" parent="."]
+z_as_relative = false
+repeat_size = Vector2(1920, 0)
+autoscroll = Vector2(-100, 0)
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("2_cayip")
+centered = false
+
+[connection signal="timeout" from="Menu/Highscores/AnimateUp" to="Menu/Highscores" method="_on_animate_up_timeout"]
+[connection signal="timeout" from="Menu/Highscores/AnimateDown" to="Menu/Highscores" method="_on_animate_down_timeout"]
+[connection signal="timeout" from="Menu/Highscores/Display" to="Menu/Highscores" method="_on_display_timeout"]
+[connection signal="pressed" from="Menu/Button" to="Menu/Button" method="_on_pressed"]
+[connection signal="pressed" from="Menu/SettingsButton" to="Menu/SettingsPane" method="_on_settings_button_pressed"]

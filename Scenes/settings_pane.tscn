@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://btw4cd2jwdkc4"]
+
+[ext_resource type="Script" uid="uid://de8sxaf0551ml" path="res://Scripts/SettingsPane.gd" id="1_qgbbu"]
+[ext_resource type="Script" uid="uid://b08hl2kw4n4su" path="res://Scripts/FullScreenSetting.gd" id="2_vtyiq"]
+[ext_resource type="Script" uid="uid://dr881h55adkm3" path="res://Scenes/ResetHighscoreButton.gd" id="3_8cqd7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yfxjt"]
+bg_color = Color(0.165656, 0.165656, 0.165656, 1)
+skew = Vector2(0.085, 0)
+
+[node name="SettingsPane" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -100.0
+offset_right = 50.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_yfxjt")
+script = ExtResource("1_qgbbu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -92.0
+offset_right = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 46
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="FullScreenCheckBox" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+text = "Fullscreen"
+alignment = 2
+script = ExtResource("2_vtyiq")
+
+[node name="ResetHighscoreButton" type="Button" parent="VBoxContainer"]
+modulate = Color(0.950598, 0, 0.158733, 1)
+layout_mode = 2
+text = "Reset Highscore (!)"
+script = ExtResource("3_8cqd7")
+confirm_color = Color(0.988461, 0.510566, 3.85046e-07, 1)
+success_color = Color(0, 0.902706, 0, 1)
+
+[node name="CloseButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Close Settings"
+
+[connection signal="toggled" from="VBoxContainer/FullScreenCheckBox" to="VBoxContainer/FullScreenCheckBox" method="_on_toggled"]
+[connection signal="mouse_exited" from="VBoxContainer/ResetHighscoreButton" to="VBoxContainer/ResetHighscoreButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/ResetHighscoreButton" to="VBoxContainer/ResetHighscoreButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

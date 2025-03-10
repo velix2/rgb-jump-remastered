@@ -12,7 +12,7 @@ func _on_visibility_changed() -> void:
 	if not visible:
 		return
 	animate_time = true
-	time_target = TimeManager.get_playtime_unix()
+	time_target = floorf(TimeManager.get_playtime_unix())
 	print(time_target)
 	update_text_display()
 
