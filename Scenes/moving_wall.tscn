@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0xpak1eiss0i"]
+[gd_scene load_steps=6 format=3 uid="uid://c0xpak1eiss0i"]
 
 [ext_resource type="Script" uid="uid://1taldbd5qdl5" path="res://Scripts/MovingWall.gd" id="1_d8850"]
-[ext_resource type="Texture2D" uid="uid://0n0aldig74v8" path="res://Barrier.png" id="2_f4boo"]
-[ext_resource type="Texture2D" uid="uid://bec02rivfpo57" path="res://Passthrough.png" id="3_xf5eu"]
+[ext_resource type="Texture2D" uid="uid://0n0aldig74v8" path="res://Textures/Barrier.png" id="2_f4boo"]
+[ext_resource type="OccluderPolygon2D" uid="uid://7smm1p8sxebt" path="res://Misc/WallLightOccluder.tres" id="3_gk15i"]
+[ext_resource type="Texture2D" uid="uid://bec02rivfpo57" path="res://Textures/Passthrough.png" id="3_xf5eu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ybne4"]
 size = Vector2(64, 64)
@@ -25,6 +26,9 @@ scale = Vector2(8, 8)
 texture = ExtResource("2_f4boo")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 80)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="WallTop"]
+occluder = ExtResource("3_gk15i")
 
 [node name="Passthrough" type="Area2D" parent="."]
 z_index = -1
@@ -55,6 +59,9 @@ scale = Vector2(8, 8)
 texture = ExtResource("2_f4boo")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 80)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="WallBottom"]
+occluder = ExtResource("3_gk15i")
 
 [connection signal="body_entered" from="WallTop" to="." method="_on_wall_body_entered"]
 [connection signal="body_entered" from="Passthrough" to="." method="_on_passthrough_body_entered"]

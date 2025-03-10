@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cbeoup3mi4vwt"]
+[gd_scene load_steps=9 format=3 uid="uid://cbeoup3mi4vwt"]
 
 [ext_resource type="Script" uid="uid://cjb7lv1ggtbme" path="res://Scripts/Player.gd" id="1_iacoy"]
 
@@ -26,6 +26,18 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
+[sub_resource type="Gradient" id="Gradient_v0iea"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.428571, 0.668831, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.0584416, 0.0584416, 0.0584416, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cvnsp"]
+gradient = SubResource("Gradient_v0iea")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_6lp34"]
 radius = 44.0
 
@@ -44,6 +56,12 @@ texture = SubResource("GradientTexture2D_pskca")
 z_index = 1
 scale = Vector2(0.1, 0.1)
 texture = SubResource("GradientTexture2D_wqird")
+
+[node name="PointLight2D" type="PointLight2D" parent="CurrentColorTexture"]
+scale = Vector2(70, 70)
+energy = 0.2
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_cvnsp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["wall"]]
 scale = Vector2(0.5, 0.5)
